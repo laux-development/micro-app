@@ -5,12 +5,12 @@ package entity
 // Gender = Male | Female | Other | Prefer not to say
 // Race = Caucasian, Black, Asian etc
 type Profile struct {
-	Address   string
-	Company   string
-	DOB       string
-	FirstName string
-	Gender    string
-	JobRole   string
-	LastName  string
-	Race      string
+	Address    string
+	Company    string
+	DOB        string
+	FirstName  string
+	Gender     string
+	GithubName string
+	JobRole    string
+	LastName   string
 }

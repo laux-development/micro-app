@@ -3,7 +3,7 @@ package validations
 import (
 	"errors"
 
-	e "app/profiles/domain/entity"
+	e "github.com/laux-development/micro_app/profiles/domain/entity"
 )
 
 const (
@@ -17,22 +17,51 @@ type Profile struct {
 }
 
 // Validate validates a profile entity
-func (p Profile) Validate() error {
+func (p Profile) Validate() (err error) {
 
-	// validate firstname
-	if len(p.FirstName) < 2 || len(p.FirstName) > 40 {
+	// set error to nil to initialize
+	err = nil
+
+	err = validateFirstName(p.FirstName)
+	err = validateLastName(p.LastName)
+	err = validateAddress(p.Address)
+
+	return err
+}
+
+// ValidEntity validates and then returns a profile entity
+func (p Profile) ValidEntity() (profile *e.Profile, err error) {
+
+	err = p.Validate()
+	if err != nil {
+		return nil, err
+	}
+	profile = p.Profile
+
+	return profile, nil
+
+}
+
+// validate firstname
+func validateFirstName(thing string) error {
+	if len(thing) < 2 || len(thing) > 40 {
 		return errors.New(msgNameInvalid)
 	}
+	return nil
+}
 
-	// validate lastname
-	if len(p.LastName) < 2 || len(p.LastName) > 40 {
+// validate lastname
+func validateLastName(thing string) error {
+	if len(thing) < 2 || len(thing) > 40 {
 		return errors.New(msgNameInvalid)
 	}
+	return nil
+}
 
-	// validate address
-	if len(p.Address) < 20 || len(p.Address) > 200 {
+// // validate address
+func validateAddress(thing string) error {
+	if len(thing) < 20 || len(thing) > 200 {
 		return errors.New(msgAddressInvalid)
 	}
-
 	return nil
 }
